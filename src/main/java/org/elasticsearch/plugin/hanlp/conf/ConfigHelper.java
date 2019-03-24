@@ -187,7 +187,8 @@ public class ConfigHelper {
         final String cfPath = filePath;
         try {
             //SpecialPermission.check();
-            InputStream cachedResource = IOUtil.getResourceAsStream(cfPath + ".bin");
+            String cachedPath = (cfPath.startsWith("/") ? cfPath : "/" + cfPath) + ".bin";
+            InputStream cachedResource = IOUtil.getResourceAsStream(cachedPath);
             if (cachedResource != null) {
                 StopWordDictionary stopwordDict = new StopWordDictionary();
                 stopwordDict.load(new ByteArray(IOUtility.readBytesFromOtherInputStream(cachedResource)));
