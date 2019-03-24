@@ -159,7 +159,7 @@ public class ConfigHelper {
                     .enablePlaceRecognize(config.isEnablePlaceRecognize())
                     .enableTranslatedNameRecognize(config.isEnableTraditionalChineseMode())
                     .enableOffset(true).enablePartOfSpeechTagging(true);
-            System.out.println(segment.seg("HanLP中文分词工具包！"));
+            //System.out.println(segment.seg("HanLP中文分词工具包！"));
             return segment;
         });
     }
