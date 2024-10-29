@@ -1,17 +1,20 @@
 package org.elasticsearch.plugin.hanlp;
 
 
+import java.nio.file.Path;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.apache.lucene.analysis.Analyzer;
+import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.index.analysis.AnalyzerProvider;
 import org.elasticsearch.index.analysis.TokenizerFactory;
 import org.elasticsearch.indices.analysis.AnalysisModule;
 import org.elasticsearch.plugin.hanlp.analysis.HanLPAnalyzerProvider;
 import org.elasticsearch.plugin.hanlp.analysis.HanLPTokenizerFactory;
+import org.elasticsearch.plugin.hanlp.conf.CustomDictionaryLoader;
 import org.elasticsearch.plugins.AnalysisPlugin;
 import org.elasticsearch.plugins.Plugin;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * elasticsearch-analysis-hanlp
@@ -19,8 +22,12 @@ import java.util.Map;
  * Created by hezl on 2018-11-20.
  */
 public class AnalysisHanLPPlugin extends Plugin implements AnalysisPlugin {
-    public static String PLUGIN_NAME = "analysis-hanlp";
+    public static final String PLUGIN_NAME = "analysis-hanlp";
 
+    public AnalysisHanLPPlugin(Settings settings, Path configPath) {
+        CustomDictionaryLoader.loadAll(settings, configPath, String.format("%s/dictionaries", PLUGIN_NAME));
+    }
+ 
     @Override
     public Map<String, AnalysisModule.AnalysisProvider<TokenizerFactory>> getTokenizers() {
         Map<String, AnalysisModule.AnalysisProvider<TokenizerFactory>> extra = new HashMap<>();
